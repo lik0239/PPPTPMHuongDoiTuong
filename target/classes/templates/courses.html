@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Học phần - ĐKHP</title>
+  <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body th:replace="_layout :: layout (~{::section}, ~{::title})">
+<section>
+  <h1>Lớp học phần</h1>
+
+  <form method="get" th:action="@{/courses}" class="toolbar" style="display:flex;gap:.5rem">
+    <input type="text" name="q" th:value="${q}" placeholder="Tìm mã HP, tên HP, giảng viên, nhóm..."/>
+    <button class="btn" type="submit">Tìm</button>
+    <a class="btn" th:href="@{/courses(open=true,q=${q})}">Đang mở đăng ký</a>
+  </form>
+
+
+  <p class="muted" th:text="'Tìm thấy ' + ${count} + ' lớp.'">Tìm thấy 0 lớp.</p>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Mã HP</th>
+      <th>Tên học phần</th>
+      <th>TC</th>
+      <th>Nhóm</th>
+      <th>Giảng viên</th>
+      <th>Lịch học</th>
+      <th>Sĩ số</th>
+      <th>Đã ĐK</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${#lists.isEmpty(items)}">
+      <td colspan="8" class="muted">Không có dữ liệu.</td>
+    </tr>
+    <tr th:each="it : ${items}">
+      <td th:text="${it.code}">CS101</td>
+      <td th:text="${it.name}">Lập trình cơ bản</td>
+      <td th:text="${it.credits}">3</td>
+      <td th:text="${it.groupCode}">N01</td>
+      <td th:text="${it.teacher}">(Đang cập nhật)</td>
+      <td th:text="${it.schedule}">Th2 07:30-09:05</td>
+      <td th:text="${it.capacity}">60</td>
+      <td th:text="${it.enrolled}">42</td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+</body>
+</html>

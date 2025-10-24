@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Trang chủ - ĐKHP</title>
+  <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body th:replace="_layout :: layout (~{::section}, ~{::title})">
+<section>
+  <h1>Xin chào 👋</h1>
+  <p class="muted">Hệ thống đăng ký học phần. Vào trang “Học phần” để xem các lớp đang mở.</p>
+  <div style="margin-top:1rem">
+    <a class="btn" th:href="@{/courses}">Xem lớp đang mở đăng ký</a>
+  </div>
+</section>
+</body>
+</html>

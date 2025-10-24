@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_layout :: layout (~{::section}, ~{::title})}">
+<head>
+  <title>Bảng điều khiển - Admin</title>
+</head>
+<body>
+<section>
+  <h1>Quản trị hệ thống</h1>
+  <p class="muted">Chọn chức năng:</p>
+  <ul>
+    <li><a th:href="@{/admin/courses}">Quản lý học phần / lớp học phần</a></li>
+    <li><a th:href="@{/admin/semesters}">Quản lý học kỳ</a></li>
+    <li><a th:href="@{/admin/students}">Quản lý sinh viên</a></li>
+  </ul>
+</section>
+</body>
+</html>

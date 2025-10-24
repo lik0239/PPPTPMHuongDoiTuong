@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Đăng ký</title>
+  <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body th:replace="_layout :: layout (~{::section}, ~{::title})">
+<section>
+  <h1>Đăng ký tài khoản</h1>
+
+  <form method="post" th:action="@{/register}" th:object="${form}" class="form">
+    <label>Mã số sinh viên (MSSV) <span class="muted">— bắt buộc</span></label>
+    <input type="text" th:field="*{mssv}" placeholder="VD: SV001" required />
+
+    <label>Tên đăng nhập</label>
+    <input type="text" th:field="*{username}" required />
+
+    <label>Mật khẩu</label>
+    <input type="password" th:field="*{password}" required />
+
+    <button class="btn" type="submit">Đăng ký</button>
+
+    <!-- Hiển thị lỗi -->
+    <div th:if="${#fields.hasErrors('*')}" style="margin-top:8px;color:#dc2626">
+      <p th:each="e : ${#fields.errors('*')}" th:text="${e}">Lỗi</p>
+    </div>
+  </form>
+</section>
+</body>
+</html>

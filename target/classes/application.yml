@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/WebDangKyHocPhan
     username: postgres
-    password: postgres
+    password: Chihan0403@
   jpa:
     hibernate:
       ddl-auto: validate
@@ -10,8 +10,18 @@ spring:
     properties:
       hibernate.jdbc.time_zone: UTC
   flyway:
-    enabled: true
+    enabled: false
     locations: classpath:db/migration
+  web:
+    resources:
+      cache:
+        period: 0
+        cachecontrol:
+          no-cache: true
+      chain:
+        cache: false
+  thymeleaf:
+    cache: false
 
 server:
   port: 8080
