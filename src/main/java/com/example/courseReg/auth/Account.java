@@ -25,7 +25,7 @@ public class Account {
   @Column(name="sinh_vien_id")
   private Long sinhVienId;
 
-  // --- getters/setters ---
+  // --- getters/setters ---s
   public Long getId() { return id; }
   public void setId(Long id) { this.id = id; }
 

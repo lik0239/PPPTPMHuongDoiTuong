@@ -1,10 +1,162 @@
-body{margin:0;font:16px/1.6 system-ui,Segoe UI,Roboto,sans-serif;background:#f8fafc;color:#0f172a}
-h1{font-size:40px;margin:.2rem 0 1rem;color:#2563eb}
-.muted{color:#64748b}
-.btn{display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid #2563eb;background:#2563eb;color:#fff;text-decoration:none}
+:root{
+  --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#64748b;
+  --line:#e2e8f0; --brand:#2563eb;
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font:16px/1.7 system-ui, Segoe UI, Roboto, sans-serif;
+  color:var(--text);
+  background:linear-gradient(to bottom,var(--bg),#fff);
+}
+a{color:inherit}
+
+/* Typography */
+h1,h2{line-height:1.25;margin:0 0 .75rem}
+h1{font-size:40px;color:var(--brand)}
+h2{font-size:28px}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.text-center{text-align:center}
+
+/* Containers */
+.container{max-width:1140px;margin:0 auto;padding:0 16px}
+.main{padding:24px 0}
+.skip-link{position:absolute;left:-9999px}
+.skip-link:focus{position:static;padding:8px;border:1px dashed var(--brand);background:#fff}
+
+/* ===== HEADER ===== */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background:#fff; border-bottom:1px solid var(--line);
+  min-height:56px;
+}
+.topbar-box{min-height:56px}
+.brand-abs{
+  position:absolute; left:16px; top:50%; transform:translateY(-50%);
+  display:inline-flex; align-items:center; gap:6px;
+  font-weight:800; color:var(--brand); text-decoration:none;
+}
+.nav-actions{display:flex; align-items:center; gap:12px}
+.nav-abs{
+  position:absolute; right:16px; top:50%; transform:translateY(-50%);
+}
+.user-name{font-weight:700; color:#111827}
+
+/* Buttons */
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 14px; border-radius:10px; border:1px solid var(--brand);
+  background:var(--brand); color:#fff; text-decoration:none; font-weight:700; cursor:pointer;
+}
 .btn:hover{background:#1d4ed8}
-.table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden}
-.table th,.table td{padding:10px 12px;border-bottom:1px solid #e2e8f0}
-.table thead th{background:#eef2ff}
-.toolbar{display:flex;gap:8px;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin:12px 0}
-.toolbar input{padding:8px 10px;border:1px solid #e2e8f0;border-radius:10px}
+.btn:disabled{opacity:.6; cursor:not-allowed}
+.btn-outline{background:#fff; color:var(--brand); border-color: var(--brand)}
+.btn-login{border-color:#2563eb; background:#2563eb}
+.logout-form{display:inline}
+
+/* ===== SIDEBAR ===== */
+.layout-grid-2{display:grid; grid-template-columns:1fr; gap:16px}
+@media (min-width:992px){.layout-grid-2{grid-template-columns:320px minmax(0,1fr)}}
+
+.sidebar{display:grid; gap:16px; align-content:start}
+
+.card{
+  background:var(--card); border:1px solid var(--line);
+  border-radius:12px; padding:14px 16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.02);
+}
+.card:hover{box-shadow:0 3px 12px rgba(0,0,0,.04)}
+.card-title{
+  font-weight:700; margin-bottom:8px; color:var(--text);
+  border-bottom:1px solid var(--line); padding-bottom:4px;
+}
+
+.link-list{list-style:none; margin:0; padding:6px 0 0 0}
+.link-list li{margin:6px 0}
+.link-list a{
+  display:block;
+  width:100%;
+  padding:10px 12px;
+  border-radius:10px;
+  color:var(--brand);
+  text-decoration:none;
+  transition:background .2s, color .2s, box-shadow .2s;
+}
+.link-list a:hover{background:#eef2ff; color:#1d4ed8}
+.link-list a:focus{
+  background:#eef2ff;
+  color:#1d4ed8;
+  box-shadow:0 1px 0 rgba(0,0,0,.02) inset;
+  outline:none;
+}
+
+/* Content area */
+.content{min-height:320px}
+
+/* Logo center (trang home) */
+.logo-center{text-align:center; margin:16px 0 24px}
+.logo-center img{max-width:160px; height:auto; filter:drop-shadow(0 4px 12px rgba(0,0,0,.08))}
+
+/* Footer */
+.site-footer{border-top:1px solid var(--line); padding:16px; color:#64748b; background:#fff}
+.footer-grid{display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; align-items:center}
+.footer-nav{display:flex; gap:12px}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark){
+  :root{--bg:#0b1220; --card:#0f172a; --text:#e2e8f0; --muted:#94a3b8; --line:#1e293b; --brand:#60a5fa}
+  body{background:linear-gradient(to bottom,#0b1220,#0f172a)}
+  .site-footer{background:#0f172a}
+  .btn{background:#1f4fd7; border-color:#1f4fd7}
+  .btn-outline{background:#0f172a; color:#e2e8f0; border-color:#334155}
+}
+
+/* ===== Courses page ===== */
+.toolbar-courses{display:flex; gap:8px}
+.toolbar-courses input{
+  flex:1; padding:10px 12px; border:1px solid var(--line); border-radius:10px; font-size:15px;
+}
+.table{
+  width:100%; border-collapse:separate; border-spacing:0; background:#fff;
+  border:1px solid var(--line); border-radius:12px; overflow:hidden;
+}
+.table th,.table td{padding:12px 14px; border-bottom:1px solid var(--line)}
+.table thead th{background:#e8edff; color:#0f172a; font-weight:700}
+.table tbody tr:hover{background:#f1f5ff}
+
+.btn.small{padding:8px 10px; border-radius:8px; font-size:14px; line-height:1.1}
+.btn.outline{background:#fff; color:var(--brand); border-color:var(--brand)}
+.btn.danger{background:#ef4444; border-color:#ef4444; color:#fff}
+.btn.danger:hover{filter:brightness(.96)}
+
+.badge{
+  display:inline-block; padding:6px 10px; border-radius:999px;
+  background:#f1f5f9; color:#0f172a; border:1px solid var(--line); font-size:13px;
+}
+
+/* ===== Form “Thêm/Sửa học phần” ===== */
+.form-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+@media (max-width:1024px){.form-grid{grid-template-columns:1fr}}
+.form-row{display:flex; flex-direction:column; gap:8px}
+label{font-weight:600}
+.help{color:var(--muted); font-size:13px}
+input[type=text], input[type=number], select, textarea{
+  width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#fff;
+}
+textarea{min-height:64px; resize:vertical}
+select[multiple]{min-height:156px}
+input:focus, select:focus, textarea:focus{
+  outline:none; border-color:var(--brand); box-shadow:0 0 0 3px rgba(37,99,235,.2);
+}
+.invalid{color:#b91c1c; font-size:13px; margin-top:-4px}
+.alert{
+  border:1px solid #fecaca; background:#fef2f2; color:#991b1b;
+  padding:10px 12px; border-radius:10px; margin:0 0 12px;
+}
+.toolbar{display:flex; gap:10px; justify-content:flex-end; margin-top:10px}
+
+/* Optional: tiêu đề cố định ở phần nội dung */
+.sticky-head{display:flex; align-items:center; justify-content:space-between; margin:0 0 14px}

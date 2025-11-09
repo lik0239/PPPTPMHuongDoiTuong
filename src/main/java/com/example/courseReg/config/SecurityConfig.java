@@ -1,9 +1,12 @@
 package com.example.courseReg.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,42 +29,46 @@ public class SecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
+  // CHỈ GIỮ MỘT BEAN NÀY
   @Bean
-  public UserDetailsService userDetailsService() {
-    return username -> accountRepo.findByUsername(username)
-        .map(acc -> User.withUsername(acc.getUsername())
-                        .password(acc.getPassword())
-                        .roles(acc.getRole())
-                        .build())
-        .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+  public UserDetailsService userDetailsService(AccountRepository repo) {
+    return username -> {
+      var acc = repo.findByUsername(username.trim().toLowerCase())
+          .orElseThrow(() -> new UsernameNotFoundException("Không tìm thấy user: " + username));
+
+      var authorities = List.of(new SimpleGrantedAuthority(acc.getRole())); // "ADMIN"/"STUDENT"
+
+      return new org.springframework.security.core.userdetails.User(
+          acc.getUsername(), acc.getPassword(), authorities
+      );
+    };
   }
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-  http
-    .csrf(csrf -> csrf.disable())
-    .authorizeHttpRequests(auth -> auth
-      .requestMatchers(
-        "/", "/home",
-        "/courses", "/courses/**",
-        "/login",
-        "/register", "/register/**",
-        "/error",
-        "/styles.css", "/favicon.ico",
-        "/css/**", "/js/**", "/images/**", "/webjars/**"
-      ).permitAll()
-      .requestMatchers("/admin/**").hasRole("ADMIN")
-      .anyRequest().authenticated()
-    )
-    .formLogin(login -> login
-      .loginPage("/login")
-      .defaultSuccessUrl("/", true)
-      .permitAll()
-    )
-    .logout(logout -> logout
-      .logoutUrl("/logout")
-      .logoutSuccessUrl("/")
-    );
+    http
+      .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+      .authorizeHttpRequests(auth -> auth
+        .requestMatchers("/", "/home", "/login", "/register", "/error",
+                         "/styles.css", "/favicon.ico", "/css/**", "/js/**", "/images/**", "/webjars/**",
+                         "/h2-console/**").permitAll()
+        .requestMatchers(HttpMethod.GET, "/courses").permitAll()
+        .requestMatchers(HttpMethod.POST, "/courses/*/register", "/courses/*/unregister")
+          .hasAuthority("STUDENT")
+        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+        .anyRequest().authenticated()
+      )
+      .formLogin(login -> login
+        .loginPage("/login")
+        .loginProcessingUrl("/login")
+        .defaultSuccessUrl("/", true)
+        .permitAll()
+      )
+      .logout(logout -> logout
+        .logoutUrl("/logout")
+        .logoutSuccessUrl("/")
+        .permitAll()
+      );
     return http.build();
   }
 }

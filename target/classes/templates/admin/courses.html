@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Quản lý học phần</title>
+  <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+<body>
+<h1>Danh sách học phần</h1>
+
+<a th:href="@{/admin/courses/create}">+ Thêm học phần</a>
+
+<table border="1">
+  <tr>
+    <th>Mã HP</th>
+    <th>Tên học phần</th>
+    <th>Nhóm</th>
+    <th>Giảng viên</th>
+    <th>Số TC</th>
+    <th>Thao tác</th>
+  </tr>
+  <tr th:each="c : ${courses}">
+    <td th:text="${c.maHocPhan}"></td>
+    <td th:text="${c.tenHocPhan}"></td>
+    <td th:text="${c.nhom}"></td>
+    <td th:text="${c.giangVien}"></td>
+    <td th:text="${c.soTinChi}"></td>
+    <td>
+      <a th:href="@{'/admin/courses/edit/' + ${c.id}}">Sửa</a> |
+      <a th:href="@{'/admin/courses/delete/' + ${c.id}}" onclick="return confirm('Xóa học phần này?')">Xóa</a>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

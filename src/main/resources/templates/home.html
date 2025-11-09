@@ -1,16 +1,98 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" th:replace="~{_layout :: layout (content=~{::section}, pageTitle=~{::title})}">
 <head>
-  <title>Trang chủ - ĐKHP</title>
-  <link rel="stylesheet" href="/styles.css"/>
+<title>Trang chủ - ĐKHP</title>
+<!-- Không cần link CSS ở đây; layout sẽ chèn <link th:href="@{/styles.css}"> trong <head> -->
 </head>
-<body th:replace="_layout :: layout (~{::section}, ~{::title})">
+<body>
 <section>
-  <h1>Xin chào 👋</h1>
-  <p class="muted">Hệ thống đăng ký học phần. Vào trang “Học phần” để xem các lớp đang mở.</p>
-  <div style="margin-top:1rem">
-    <a class="btn" th:href="@{/courses}">Xem lớp đang mở đăng ký</a>
-  </div>
+<!-- Breadcrumb đơn giản -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+<a th:href="@{/}">Trang chủ</a>
+<span class="sep">/</span>
+<span class="current">Giới thiệu</span>
+</nav>
+
+<!-- Nội dung chính: tiêu đề & giới thiệu -->
+<article class="content">
+<div class="text-center">
+<h2>TRƯỜNG ĐẠI HỌC TÀI NGUYÊN VÀ MÔI TRƯỜNG<br/>TP. HỒ CHÍ MINH</h2>
+<p><em>(Ho Chi Minh City University of Natural Resources and Environment - HCMUNRE)</em></p>
+</div>
+<figure class="logo-center">
+<img th:src="@{/images/logo.png}" src="/images/logo.png" alt="Logo"/>
+</figure>
+
+
+<p>
+Là trường đại học công lập duy nhất phía Nam trực thuộc Bộ Tài nguyên và Môi trường, trải qua hơn 45 năm xây dựng và phát triển,
+Trường Đại học Tài nguyên và Môi trường TP. Hồ Chí Minh đã khẳng định được vị thế trong hệ thống giáo dục đại học đào tạo nguồn nhân lực
+có trình độ trong lĩnh vực công nghệ, quản lý tài nguyên, đảm bảo môi trường sạch cho phát triển bền vững và cùng thế giới ứng phó với các
+vấn đề biển đổi khí hậu trên toàn cầu.
+</p>
+
+
+<h2>HOẠT ĐỘNG ĐÀO TẠO</h2>
+<p>
+Với quan điểm đào tạo đáp ứng theo nhu cầu của xã hội, trong xu thế hội nhập và công nghiệp 4.0, chương trình đào tạo của Nhà trường thường xuyên
+cập nhật định hướng đào tạo “Đa ngành, Xuyên ngành”. Điều này giúp sinh viên sau khi tốt nghiệp được trang bị đầy đủ kỹ năng nghề nghiệp, năng lực
+chuyên môn và kiến thức xã hội, có thể đáp ứng tốt nhất yêu cầu của nhà tuyển dụng.
+</p>
+<p>
+Trong giai đoạn phát triển sau này Nhà trường sẽ mở rộng quy mô đào tạo cao học, hướng đến đào tạo tiến sĩ nhằm đáp ứng tốt hơn yêu cầu của đất nước
+trong giai đoạn mới. Hiện nay, quy mô đào tạo hơn 8.000 học viên, sinh viên hệ đại học, cao học. Với 18 ngành đào tạo đại học và 05 ngành đào tạo
+cao học thuộc lĩnh vực tài nguyên và môi trường.
+</p>
+<p>
+Năm 2021 Trường được Bộ Giáo dục và Đào tạo ký quyết định công nhận đạt kiểm định chất lượng cơ sở giáo dục. Sự kiện này một lần nữa khẳng định Nhà trường
+là một cơ sở đào tạo nguồn nhân lực chất lượng cao, có uy tín đáp ứng yêu cầu về chất lượng đào tạo đạt chuẩn quốc gia và định hướng khu vực, quốc tế.
+</p>
+
+
+<h2>CƠ SỞ VẬT CHẤT</h2>
+<p>
+Để đáp ứng nhu cầu học tập và nghiên cứu của giảng viên, học viên, sinh viên, Nhà trường đã và luôn quan tâm đầu tư cơ sở vật chất, trang thiết bị học tập,
+thực hành theo hướng hiện đại, sát thực tế. Hệ thống cơ sở vật chất phục vụ công tác giảng dạy, học tập và nghiên cứu khoa học của Trường với các phòng
+thí nghiệm, phòng thực hành và các trạm, vườn thí nghiệm thực địa. Trong đó nổi bật như phòng thí nghiệm Môi trường, phòng thí nghiệm trọng điểm Hóa - Lý
+(đạt chứng chỉ ISO/IEC 17025:2005), Vườn Quan trắc khí tượng, Phòng thực hành mô phỏng dự báo khí tượng và hơn 200 máy thực hành cho ngành Trắc địa – Bản đồ.
+</p>
+
+
+<h2>NGHIÊN CỨU KHOA HỌC VÀ HỢP TÁC QUỐC TẾ</h2>
+<p>
+Hoạt động nghiên cứu khoa học và chuyển giao công nghệ được Nhà trường chú trọng triển khai, góp phần hỗ trợ hoạt động đào tạo và phục vụ cộng đồng. Hiện nay
+hoạt động nghiên cứu khoa học của Trường đã và luôn tiếp cận theo xu thế liên ngành; trong đó các hướng nghiên cứu chính của Nhà trường tập trung vào các lĩnh
+vực quan trọng như tài nguyên và môi trường, năng lượng mới, quản lý - xử lý chất thải, khí tượng thủy văn và biến đổi khí hậu, quản lý đất đai - trắc địa bản đồ,
+tài nguyên nước, ứng dụng CNTT trong lĩnh vực tài nguyên và môi trường,...
+</p>
+<p>
+Trong giai đoạn 2016 – 2020, Nhà trường đã triển khai thực hiện hàng trăm đề tài các cấp trong các lĩnh vực; công bố nhiều công trình nghiên cứu được công bố
+trên tạp chí trong và ngoài nước lĩnh vực Tài nguyên và Môi trường; tổ chức và tham gia nhiều hội nghị hội thảo khoa học trong nước và quốc tế, tiêu biểu như:
+</p>
+
+
+<h2>QUAN HỆ ĐỐI NGOẠI</h2>
+<p>
+Hiện nay, Nhà Trường đã trở thành đối tác tin cậy của nhiều tổ chức đào tạo, nghiên cứu trong và ngoài nước trong việc triển khai hoạt động đào tạo, nghiên cứu
+khoa học, thực hiện dự án và chuyển giao công nghệ. Nhiều cán bộ, giảng viên và sinh viên của trường đã nhận học bổng nghiên cứu, đào tạo và được tuyển dụng làm việc tại nước ngoài.
+</p>
+
+
+<h2>NGUỒN NHÂN LỰC</h2>
+<p>
+Đội ngũ cán bộ, giảng viên, nhân viên cơ hữu của trường đa số đều có trình độ từ thạc sĩ trở lên, trong đó hơn 10% là giáo sư, phó giáo sư, tiến sĩ, chuyên gia trong
+lĩnh vực tài nguyên - môi trường. Phần lớn các giảng viên được đào tạo bài bản từ các cơ sở đào tạo có uy tín trong và ngoài nước, giảng dạy theo đúng chuyên ngành và luôn sẵn sàng
+đồng hành cùng sinh viên trong quá trình học tập, nghiên cứu khoa học cũng như tiếp cận với môi trường làm việc thực tế tại doanh nghiệp.
+</p>
+
+
+<h2>THÀNH TỰU</h2>
+<p>
+Nhà trường đã 02 lần vinh dự được Chủ tịch Nước tặng thưởng Huân chương Lao động hạng Nhì vào các năm 2012, 2021 và nhiều Bằng khen, Cờ Thi đua của Bộ Tài nguyên & Môi trường,
+Bộ Giáo dục và Đào tạo. Ngày 16/8/2021 Trường được Bộ Giáo dục và Đào tạo ký quyết định công nhận đạt kiểm định chất lượng cơ sở giáo dục.
+</p>
+</article>
+</div>
 </section>
 </body>
 </html>

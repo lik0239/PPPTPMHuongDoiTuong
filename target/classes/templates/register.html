@@ -1,30 +1,91 @@
 <!doctype html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Đăng ký</title>
-  <link rel="stylesheet" href="/styles.css"/>
+  <meta charset="utf-8"/>
+  <title>Đăng ký tài khoản</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- CSS tối giản mô phỏng template -->
+  <style>
+    :root{--brand:#2563eb;--line:#e2e8f0;--text:#0f172a}
+    *{box-sizing:border-box} html,body{height:100%;margin:0}
+    body{font:16px/1.6 system-ui,Segoe UI,Roboto,sans-serif;color:var(--text)}
+    .vh-100{min-height:100vh}
+    .bg-image{background-size:cover;background-position:center}
+    .mask{background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(255,255,255,.75))}
+    .wrap{display:grid;place-items:center;min-height:100vh;padding:16px}
+    .card{width:min(560px,100%);background:#fff;border:1px solid var(--line);border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+    .card-body{padding:28px}
+    h2{margin:0 0 18px;text-align:center;font-size:28px}
+    .form{display:grid;gap:14px;margin-top:8px}
+    .form-outline{display:grid;gap:6px}
+    .form-label{font-weight:600}
+    .form-control{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}
+    .form-control:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+    .password-wrap{position:relative}
+    .toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:none;background:transparent;cursor:pointer;opacity:.7}
+    .toggle:hover{opacity:1}
+    .btn{appearance:none;border:1px solid var(--brand);background:var(--brand);color:#fff;padding:12px 16px;border-radius:12px;cursor:pointer;font-weight:700;width:100%}
+    .btn:hover{filter:brightness(.98)}
+    .row-actions{display:grid;gap:10px;margin-top:6px}
+    .muted{text-align:center;color:#64748b}
+    .muted a{color:var(--brand);text-decoration:none}
+    .muted a:hover{text-decoration:underline}
+    .field-error{color:#dc2626;font-size:13px}
+    .alert{padding:10px 12px;border-radius:10px;border:1px solid transparent}
+    .error{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+  </style>
 </head>
-<body th:replace="_layout :: layout (~{::section}, ~{::title})">
-<section>
-  <h1>Đăng ký tài khoản</h1>
 
-  <form method="post" th:action="@{/register}" th:object="${form}" class="form">
-    <label>Mã số sinh viên (MSSV) <span class="muted">— bắt buộc</span></label>
-    <input type="text" th:field="*{mssv}" placeholder="VD: SV001" required />
+<body>
+<section class="vh-100 bg-image" style="background-image:url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+  <div class="mask vh-100">
+    <div class="wrap">
+      <div class="card">
+        <div class="card-body">
+          <h2>Tạo tài khoản</h2>
 
-    <label>Tên đăng nhập</label>
-    <input type="text" th:field="*{username}" required />
+          <form method="post" th:action="@{/register}" th:object="${form}" class="form">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-    <label>Mật khẩu</label>
-    <input type="password" th:field="*{password}" required />
+            <div class="form-outline">
+              <label class="form-label" for="mssv">Mã số sinh viên (MSSV) <span style="color:#ef4444">*</span></label>
+              <input id="mssv" th:field="*{mssv}" class="form-control" required placeholder="VD: SV001"/>
+              <div class="field-error" th:errors="*{mssv}"></div>
+            </div>
 
-    <button class="btn" type="submit">Đăng ký</button>
+            <div class="form-outline">
+              <label class="form-label" for="username">Tên đăng nhập <span style="color:#ef4444">*</span></label>
+              <input id="username" th:field="*{username}" class="form-control" required placeholder="vd: han2004" autocomplete="username"/>
+              <div class="field-error" th:errors="*{username}"></div>
+            </div>
 
-    <!-- Hiển thị lỗi -->
-    <div th:if="${#fields.hasErrors('*')}" style="margin-top:8px;color:#dc2626">
-      <p th:each="e : ${#fields.errors('*')}" th:text="${e}">Lỗi</p>
+            <div class="form-outline password-wrap">
+              <label class="form-label" for="password">Mật khẩu <span style="color:#ef4444">*</span></label>
+              <input id="password" th:field="*{password}" class="form-control" type="password" required placeholder="Tối thiểu 6 ký tự" autocomplete="new-password"/>
+              <button class="toggle" type="button" onclick="
+                const i=document.getElementById('password');
+                i.type=(i.type==='password'?'text':'password');
+              " aria-label="Hiện/ẩn mật khẩu">👁</button>
+              <div class="field-error" th:errors="*{password}"></div>
+            </div>
+
+            <!-- Hiển thị lỗi chung khác -->
+            <div class="alert error" th:if="${#fields.hasErrors('*')}" th:each="e : ${#fields.errors('*')}"
+                 th:text="${e}"></div>
+
+            <div class="row-actions">
+              <button class="btn" type="submit">Đăng ký</button>
+              <p class="muted">Đã có tài khoản?
+                <a th:href="@{/login}">Đăng nhập</a>
+              </p>
+            </div>
+          </form>
+
+        </div>
+      </div>
     </div>
-  </form>
+  </div>
 </section>
 </body>
 </html>

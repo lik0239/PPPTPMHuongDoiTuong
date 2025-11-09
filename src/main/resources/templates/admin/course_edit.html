@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${title} ?: 'Sửa học phần'">Sửa học phần</title>
+  <link rel="stylesheet" href="/styles.css"/>
+</head>
+
+<body th:replace="~{_layout :: layout (~{::section}, ~{::title})}">
+<section>
+  <h1 th:text="${title} ?: 'Sửa học phần'">Sửa học phần</h1>
+
+  <!-- Bind vào DTO LopHocPhanForm -->
+  <form th:action="@{/admin/courses/{id}/edit(id=${form.id})}"
+        th:object="${form}" method="post" class="form">
+
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+    <!-- Lỗi chung -->
+    <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
+      Vui lòng kiểm tra các lỗi bên dưới.
+      <ul><li th:each="e : ${#fields.globalErrors()}" th:text="${e}"></li></ul>
+    </div>
+
+    <!-- Học phần -->
+    <label for="hocPhanId">Mã/Tên học phần</label>
+    <select id="hocPhanId" th:field="*{hocPhanId}" required>
+      <option value="" disabled th:selected="*{hocPhanId} == null">-- chọn học phần --</option>
+      <option th:each="hp : ${hocPhans}" th:value="${hp.id}"
+              th:text="${hp.maHocPhan} + ' - ' + ${hp.tenHocPhan}"></option>
+    </select>
+    <div class="invalid" th:if="${#fields.hasErrors('hocPhanId')}" th:errors="*{hocPhanId}"></div>
+
+    <!-- Học kỳ -->
+    <label for="hocKyId">Học kỳ</label>
+    <select id="hocKyId" th:field="*{hocKyId}" required>
+      <option value="" disabled th:selected="*{hocKyId} == null">-- chọn học kỳ --</option>
+      <option th:each="hk : ${hocKys}" th:value="${hk.id}" th:text="${hk.maHocKy}"></option>
+    </select>
+    <div class="invalid" th:if="${#fields.hasErrors('hocKyId')}" th:errors="*{hocKyId}"></div>
+
+    <!-- Nhóm lớp -->
+    <label for="nhomLop">Nhóm lớp</label>
+    <input id="nhomLop" th:field="*{nhomLop}" maxlength="10" placeholder="VD: N01" required/>
+    <div class="invalid" th:if="${#fields.hasErrors('nhomLop')}" th:errors="*{nhomLop}"></div>
+
+    <!-- Giảng viên -->
+    <label for="giangVienId">Giảng viên</label>
+    <select id="giangVienId" th:field="*{giangVienId}">
+      <option value="">-- (chưa gán) --</option>
+      <option th:each="gv : ${giangViens}" th:value="${gv.id}" th:text="${gv.hoTen}"></option>
+    </select>
+    <div class="invalid" th:if="${#fields.hasErrors('giangVienId')}" th:errors="*{giangVienId}"></div>
+
+    <!-- Sĩ số tối đa -->
+    <label for="siSoToiDa">Sĩ số tối đa</label>
+    <input id="siSoToiDa" type="number" th:field="*{siSoToiDa}" min="1" step="1" required/>
+    <div class="invalid" th:if="${#fields.hasErrors('siSoToiDa')}" th:errors="*{siSoToiDa}"></div>
+
+    <!-- Ghi chú -->
+    <label for="ghiChu">Ghi chú</label>
+    <textarea id="ghiChu" th:field="*{ghiChu}" rows="2" placeholder="Lý thuyết / Thực hành ..."></textarea>
+
+    <!-- Khung giờ (multi-select). QUAN TRỌNG: dùng th:field để bind List<Long> -->
+    <label for="khungGioIds">Khung giờ (chọn 1 hoặc nhiều)</label>
+    <select id="khungGioIds" th:field="*{khungGioIds}" multiple size="6">
+      <option th:each="kg : ${khungGios}" th:value="${kg.id}" th:text="${kg.label}"></option>
+    </select>
+
+    <div class="toolbar mt-2">
+      <button class="btn" type="submit">Lưu</button>
+      <a class="btn btn-outline" th:href="@{/courses}">Hủy</a>
+    </div>
+  </form>
+</section>
+</body>
+</html>
